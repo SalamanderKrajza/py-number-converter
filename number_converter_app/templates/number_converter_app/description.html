@@ -1,0 +1,47 @@
+{% extends 'number_converter_app/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Description of this web application:</h2>
+    <div>
+        <p>This application purpose is converting some input given as number into its text representation</p>
+
+        <p>Django form check if user input is valid (it should be integer type)<br />
+        If data is not valid visitor wont be able to proceed his data</p>
+        
+        <p>When user put his valid input into the form the application will check if number isn't longer than 33 chars<br />
+        If it is too long, user will see information about this</p>
+
+        <p>Application checks if given number is below 0. <br />
+        If it is below 0 it will add "minus" word into the result of conversion</p>
+
+        <p>To convert number to words we needs to separate it somehow <br />
+        Lets take example of:<br />
+        47219483217943219</br />
+        <br />
+        We need to separate this into sections divided by 100 because converting of each 3-sign number have the same pattern<br />
+        Application will cut input into parts like this: 47 219 483 217 943 219<br />
+        We're also ignoring "-" sign if there is one because we added "minus" word to result before<br /></p>
+        
+        <p>Every element in splited_number list is analyzed in 3 steps:<br />
+        1) Find "hunderts" part.<br />
+        We're looking for word which describes first char in element f.e. "sto", "dwieście" etc.</p>
+
+        <p>2) Find "tens and units" part<br />
+        If whole 3-character long element equals 1 we need to put "jeden" in result or empty strig<br />
+        That depends if this current element is part above 1000 (then we need "tysiąc" not "jeden tysiąc")<br />
+        Numbers from between 2 and 19 are readed directly from dictionary<br />
+        Numbers from 20 to 99 are combined with two words from dictionary (or single in cases like 20, 30)</p>
+
+        <p>3) Find "main numeral" part<br />
+        This is a little more complicated part.<br />
+        If element ends with 2, 3 or 4 we need correct form of main numeral (which is "tysiące, miliony etc.")<br />
+        If element ends with different number, we need form another form of words (which is "tysięcy, milionów etc.")<br />
+        If element value is between 10 and 20, no matter how it ends it would form "tysięcy, milionów"<br />
+        If element is part below 1000 this part should be empty string</p>
+
+        <p>Then we need to combine all 3 parts for each elements and combine every element in the list into the single word</p>
+    <div>
+</div>
+
+{% endblock %}
